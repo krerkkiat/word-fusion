@@ -2,11 +2,11 @@
 
 from flask import Flask
 
-from wordfusion.database import db_session
-
 app = Flask(__name__)
+app.config.from_object('wordfusion.config.Development')
 
 import wordfusion.views
+from wordfusion.database import db_session
 
 @app.teardown_appcontext
 def shutdown_database_session(exception=None):
