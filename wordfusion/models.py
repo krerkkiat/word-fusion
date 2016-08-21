@@ -60,16 +60,3 @@ class Session(Base):
 
     user_id = Column(Integer, ForeignKey('users.id'))
     user = relationship('User', back_populates='sessions')
-
-if __name__ == '__main__':
-    from sqlalchemy import create_engine
-    engine = create_engine('sqlite:///:memory:')
-
-    from sqlalchemy.orm import sessionmaker
-    Session = sessionmaker(bind=engine)
-
-    session = Session()
-
-    Base.metadata.create_all(engine)
-    u = User(username='kc', first_name='K', last_name='C')
-    session.add(u)
