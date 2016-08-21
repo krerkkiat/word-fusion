@@ -30,12 +30,13 @@ class User(Base):
 class Set(Base):
     __tablename__ = 'sets'
     id = Column(Integer, primary_key=True)
+    name = Column(String)
     description = Column(String)
 
     user_id = Column(Integer, ForeignKey('users.id'))
     user = relationship('User', back_populates='sets')
 
-    words = relationship('Word', back_populates='set')
+    compound_words = relationship('CompoundWord', back_populates='set')
 
 class Word(Base):
     __tablename__ = 'words'
@@ -44,11 +45,18 @@ class Word(Base):
     text_eng = Column(String)
     description = Column(String)
     part_of_speech = Column(Enum(PartOfSpeech))
-    is_compound = Column(Boolean, default=False)
+
+class CompoundWord(Base):
+    __tablename__ = 'compound_words'
+    id = Column(Integer, primary_key=True)
+    text_th = Column(String)
+    text_eng = Column(String)
+    description = Column(String)
+    part_of_speech = Column(Enum(PartOfSpeech))
     combination = Column(String)
 
     set_id = Column(Integer, ForeignKey('sets.id'))
-    set = relationship('Set', back_populates='words')
+    set = relationship('Set', back_populates='compound_words')
 
 class Session(Base):
     __tablename__ = 'sessions'
