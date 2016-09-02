@@ -37,7 +37,7 @@
 {% endblock %}
 {% block body %}
   <script type="text/javascript">
-    var data = [];
+    var words = [], nonwords = [];
 
     function shuffle(o){ //v1.0 [http://bit.ly/1l6LGQT]
       for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i),
@@ -45,9 +45,22 @@
       return o;
     };
 
+    var displayResponse = function (idx) {
+      var resultTitleElement = document.querySelector('.combination-result h4');
+      var resultDescriptionElement = document.querySelector('.combination-result p');
+
+      if (idx != -1) {
+        resultTitleElement.textContent = words[idx]['full_word'].split('|').join('');
+        resultDescriptionElement.textContent = words[idx].description;
+      } else {
+        resultTitleElement.textContent = '';
+        resultDescriptionElement.textContent = '';
+      }
+    };
+
     var populateTray = function () {
       var wordList = [];
-      data.forEach(function (curr, idx, arr) {
+      words.forEach(function (curr, idx, arr) {
         if (curr['full_word'] === '') {
           return;
         }
@@ -71,33 +84,56 @@
       // Make it draggable.
       var drake = dragula([document.querySelector('.source'), document.querySelector('.destination')]);
       drake.on('drop', function (el, target, source, sibling) {
-        // TODO: It include the source and destination dropping.
+        if (Array.from(target.classList).indexOf('source') !== -1) {
+          target = document.getElementsByClassName('destination')[0];
+        }
 
-        var resultTitleElement = document.querySelector('.combination-result h4');
-        var resultDescriptionElement = document.querySelector('.combination-result p');
-
-        var words = Array.from(target.children).map(function (curr, idx, arr) {
+        var wordsInTray = Array.from(target.children).map(function (curr, idx, arr) {
           return curr.textContent;
         });
 
-        // Find the word index in data.
+        // No further processing if no word.
+        if (wordsInTray.length == 0) {
+          return;
+        }
+
+        // Find the word index in words.
         var idx = -1;
-        var word = words.join('|');
-        for (var i = 0; i < data.length; i++) {
-          if (word === data[i].full_word) {
+        var word = wordsInTray.join('|');
+        for (var i = 0; i < words.length; i++) {
+          if (word === words[i].full_word) {
             idx = i;
             break;
           }
         }
 
-        // Display the response.
-        if (idx != -1) {
-          resultTitleElement.textContent = words.join('');
-          resultDescriptionElement.textContent = data[idx].description;
-        } else {
-          resultTitleElement.textContent = '';
-          resultDescriptionElement.textContent = '';
+        // In case we not find the word in the list.
+        // Send a request to check for its existance on server.
+        if (i == words.length) {
+          // If word is already checked.
+          if (nonwords.indexOf(word) != -1) {
+            displayResponse(-1);
+            return;
+          }
+
+          $.ajax('/search/' + word, {
+            dataType: 'json',
+            method: 'GET',
+            success: function (recv_data, status) {
+              // Check if it is a word,
+              // and also save data, so we don't have to send another request.
+              if (recv_data.length == 1) {
+                words.push(recv_data[0]);
+                displayResponse(words.length - 1);
+              } else {
+                nonwords.push(word);
+              }
+            }
+          });
         }
+
+        // Display the response.
+        displayResponse(idx);
       });
     };
 
@@ -106,7 +142,7 @@
       dataType: 'json',
       method: 'GET',
       success: function (recv_data, status) {
-        data = recv_data;
+        words = recv_data;
         populateTray();
       }
     });
