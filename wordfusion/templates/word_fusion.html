@@ -102,7 +102,7 @@
     };
 
     // Load data.
-    $.ajax('/words/1', {
+    $.ajax('{{ url_for("get_words_in_set", set_id=set_id) }}', {
       dataType: 'json',
       method: 'GET',
       success: function (recv_data, status) {
