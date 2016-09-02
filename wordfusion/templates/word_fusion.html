@@ -1,0 +1,114 @@
+{% extends "layout.html" %}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='node_modules/dragula/dist/dragula.min.css') }}" />
+  <script type="text/javascript" src="{{ url_for('static', filename='node_modules/dragula/dist/dragula.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='node_modules/jquery/dist/jquery.min.js') }}"></script>
+
+  <style type="text/css">
+    .word-list {
+      background-color: rgba(45, 46, 119, 0.72);
+      padding: 10px;
+      margin: 5px;
+      min-height: 3em;
+    }
+
+    .word {
+      display: inline-block;
+
+      background-color: rgba(255, 143, 25, 1);
+      padding: 5px;
+      margin: 5px;
+    }
+  </style>
+{% endblock %}
+{% block content %}
+  <h3>Word List (hint: they're draggable!)</h3>
+  <div class="word-list source">
+
+  </div>
+  <h3>Combination Tray</h3>
+  <div class="word-list destination">
+
+  </div>
+  <div class="combination-result">
+    <h4></h4>
+    <p></p>
+  </div>
+{% endblock %}
+{% block body %}
+  <script type="text/javascript">
+    var data = [];
+
+    function shuffle(o){ //v1.0 [http://bit.ly/1l6LGQT]
+      for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i),
+        x = o[--i], o[i] = o[j], o[j] = x);
+      return o;
+    };
+
+    var populateTray = function () {
+      var wordList = [];
+      data.forEach(function (curr, idx, arr) {
+        if (curr['full_word'] === '') {
+          return;
+        }
+
+        // Split word out.
+        var words = curr['full_word'].split('|');
+        wordList = wordList.concat(words);
+      });
+
+      // Shuffle, and remove duplicated words.
+      var wordList = new Set(shuffle(wordList));
+
+      var wordListElement = document.querySelector('.source');
+      wordList.forEach(function (curr, idx, arr) {
+        var wordElement = document.createElement('div');
+        wordElement.textContent = curr;
+        wordElement.className = 'word';
+        wordListElement.appendChild(wordElement);
+      });
+
+      // Make it draggable.
+      var drake = dragula([document.querySelector('.source'), document.querySelector('.destination')]);
+      drake.on('drop', function (el, target, source, sibling) {
+        // TODO: It include the source and destination dropping.
+
+        var resultTitleElement = document.querySelector('.combination-result h4');
+        var resultDescriptionElement = document.querySelector('.combination-result p');
+
+        var words = Array.from(target.children).map(function (curr, idx, arr) {
+          return curr.textContent;
+        });
+
+        // Find the word index in data.
+        var idx = -1;
+        var word = words.join('|');
+        for (var i = 0; i < data.length; i++) {
+          if (word === data[i].full_word) {
+            idx = i;
+            break;
+          }
+        }
+
+        // Display the response.
+        if (idx != -1) {
+          resultTitleElement.textContent = words.join('');
+          resultDescriptionElement.textContent = data[idx].description;
+        } else {
+          resultTitleElement.textContent = '';
+          resultDescriptionElement.textContent = '';
+        }
+      });
+    };
+
+    // Load data.
+    $.ajax('/words/1', {
+      dataType: 'json',
+      method: 'GET',
+      success: function (recv_data, status) {
+        data = recv_data;
+        populateTray();
+      }
+    });
+  </script>
+{% endblock %}

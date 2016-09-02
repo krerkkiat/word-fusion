@@ -1,0 +1,23 @@
+{
+  "name": "word-fusion",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krerkkiat/word-fusion.git"
+  },
+  "author": "Krerkkiat Chusap",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/krerkkiat/word-fusion/issues"
+  },
+  "homepage": "https://github.com/krerkkiat/word-fusion#readme",
+  "dependencies": {
+    "dragula": "^3.7.1",
+    "jquery": "^3.1.0"
+  }
+}
