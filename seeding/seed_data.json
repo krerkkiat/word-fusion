@@ -1,0 +1,86 @@
+{
+  "sets": [
+    {
+      "name": "นัก",
+      "description": "None.",
+      "compound_words": [
+        {
+          "text_th": "นักร้อง",
+          "text_eng": "Singer",
+          "description": "A singer.",
+          "part_of_speech": "noun",
+          "combination": "นัก|ร้อง"
+        },
+        {
+          "text_th": "นักเรียน",
+          "text_eng": "Student",
+          "description": "A student.",
+          "part_of_speech": "noun",
+          "combination": "นัก|เรียน"
+        },
+        {
+          "text_th": "นักเขียน",
+          "text_eng": "Writer",
+          "description": "A writer.",
+          "part_of_speech": "noun",
+          "combination": "นัก|เขียน"
+        }
+      ]
+    },
+    {
+      "name": "น้ำ",
+      "description": "All about water",
+      "compound_words": [
+        {
+          "text_th": "น้ำตก",
+          "text_eng": "Waterfall",
+          "description": "Waterfall.",
+          "part_of_speech": "noun",
+          "combination": "น้ำ|ตก"
+        },
+        {
+          "text_th": "น้ำดื่ม",
+          "text_eng": "Drinking water",
+          "description": "Drinking water.",
+          "part_of_speech": "noun",
+          "combination": "น้ำ|ดื่ม"
+        },
+        {
+          "text_th": "น้ำขวด",
+          "text_eng": "Bottled water",
+          "description": "Bottled water.",
+          "part_of_speech": "noun",
+          "combination": "น้ำ|ขวด"
+        }
+      ]
+    },
+    {
+      "name": "Other",
+      "description": "The word that does not belong to other set.",
+      "compound_words": [
+        {
+          "text_th": "ร้องเรียน",
+          "text_eng": "Complain",
+          "description": "Complain.",
+          "part_of_speech": "noun",
+          "combination": "ร้อง|เรียน"
+        },
+        {
+          "text_th": "ขวดน้ำ",
+          "text_eng": "A bottle of water",
+          "description": "A bottle of water.",
+          "part_of_speech": "noun",
+          "combination": "ขวด|น้ำ"
+        }
+      ]
+    }
+  ],
+  "sessions": [
+    {
+      "name": "Test Session",
+      "description": "A test description of a test session.",
+      "condition": [],
+      "active": true
+    }
+  ]
+}
