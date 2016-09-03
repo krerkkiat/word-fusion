@@ -2,7 +2,7 @@
 {% block body %}
   <ul>
     {% for s in set_list %}
-      <li><a href="{{ url_for('show_set', set_id=s.id) }}">{{ s.name }}</a> <a href="{{ url_for('play_set', set_id=s.id) }}">Play this set</a></li>
+      <li><a href="{{ url_for('show_set', set_id=s.id) }}">{{ s.name }}</a> <a href="{{ url_for('matchinggame.play', type='set', set_id=s.id) }}">Play this set</a></li>
     {% endfor %}
   </ul>
 {% endblock %}

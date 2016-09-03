@@ -22,6 +22,8 @@
   </style>
 {% endblock %}
 {% block content %}
+  <a href="{{ url_for('show_set', set_id=set_id) }}">Set's info</a>
+  <a href="{{ url_for('show_set_list') }}">Set list</a>
   <h3>Word List (hint: they're draggable!)</h3>
   <div class="word-list source">
 
@@ -138,7 +140,7 @@
     };
 
     // Load data.
-    $.ajax('{{ url_for("get_words_in_set", set_id=set_id) }}', {
+    $.ajax('{{ url_for("matchinggame.list_words", type="set", set_id=set_id) }}', {
       dataType: 'json',
       method: 'GET',
       success: function (recv_data, status) {
