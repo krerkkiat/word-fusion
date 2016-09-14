@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+'''Word Set related views.'''
 import json
 
 from flask import render_template, make_response, request
@@ -9,7 +10,7 @@ from wordfusion.models import WordSet
 
 @app.route('/word_sets')
 def show_word_set_list():
-    '''Show the list of sets.'''
+    '''Show the list of word sets.'''
     word_sets = db_session.query(WordSet).all()
     return render_template('list_word_sets.html', word_sets=word_sets)
 
