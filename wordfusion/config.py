@@ -11,3 +11,9 @@ class Config(object):
 
 class Development(Config):
     DEBUG = True
+    DATABASE_URI = 'sqlite:///' + path.join(app.instance_path, 'development.db')
+
+class Testing(Config):
+    DEBUG = True
+    TESTING = True
+    DATABASE_URI = 'sqlite:///' + path.join(app.instance_path, 'testing.db')
