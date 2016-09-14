@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+'''Blueprint for Matching Game.
+A Word Set and Session should have play,
+and list_words.
+'''
+
 import json
 
 from flask import Blueprint, render_template, make_response
@@ -15,7 +20,7 @@ def play(type, word_set_id):
 
 @matchinggame.route('/words')
 def list_words(type, word_set_id):
-    '''List all words in the set'''
+    '''List all words in the word set.'''
     set_object = db_session.query(WordSet).filter(WordSet.id == word_set_id).first()
 
     words_list = []

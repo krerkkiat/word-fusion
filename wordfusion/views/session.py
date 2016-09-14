@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+'''Session related views.'''
 
 from flask import render_template
 
@@ -14,6 +15,6 @@ def show_session_list():
 
 @app.route('/session/<int:session_id>')
 def show_session(session_id):
-    '''Show information of the session.'''
+    '''Show information of a session.'''
     session_object = db_session.query(Session).filter(Session.id == session_id).first()
     return render_template('show_session.html', session_object=session_object)

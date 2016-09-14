@@ -1,4 +1,6 @@
-import os
+# -*- coding: utf-8 -*-
+'''A test package for Word Fusion.'''
+
 import unittest
 import tempfile
 

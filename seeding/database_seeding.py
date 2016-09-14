@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+'''Contain function that handle database seeding.'''
 
 import json
 
@@ -6,6 +7,7 @@ from wordfusion.database import db_session
 from wordfusion.models import *
 
 def seed_db():
+    '''Perform database seeding.'''
     from wordfusion.models import User, WordSet, CompoundWord
     from wordfusion.database import db_session
 
