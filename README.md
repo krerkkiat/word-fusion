@@ -9,3 +9,6 @@ Run `python seeding.database_seeding`.
 
 ## Run the server
 `python runserver.py`
+
+## Run the tests
+`python runtest.py`
