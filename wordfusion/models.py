@@ -21,22 +21,22 @@ class User(Base):
     first_name = Column(String)
     last_name = Column(String)
 
-    sets = relationship('Set', back_populates='user')
+    word_sets = relationship('WordSet', back_populates='user')
     sessions = relationship('Session', back_populates='user')
 
     def __repr__(self):
         return '<User: %r>' % (self.username)
 
-class Set(Base):
-    __tablename__ = 'sets'
+class WordSet(Base):
+    __tablename__ = 'word_sets'
     id = Column(Integer, primary_key=True)
     name = Column(String)
     description = Column(String)
 
     user_id = Column(Integer, ForeignKey('users.id'))
-    user = relationship('User', back_populates='sets')
+    user = relationship('User', back_populates='word_sets')
 
-    compound_words = relationship('CompoundWord', back_populates='set')
+    compound_words = relationship('CompoundWord', back_populates='word_set')
 
 class Word(Base):
     __tablename__ = 'words'
@@ -55,8 +55,8 @@ class CompoundWord(Base):
     part_of_speech = Column(Enum(PartOfSpeech))
     combination = Column(String)
 
-    set_id = Column(Integer, ForeignKey('sets.id'))
-    set = relationship('Set', back_populates='compound_words')
+    word_set_id = Column(Integer, ForeignKey('word_sets.id'))
+    word_set = relationship('WordSet', back_populates='compound_words')
 
 class Session(Base):
     __tablename__ = 'sessions'

@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div class="set">
+    <h4>{{ word_set.name }}</h4>
+    <p>{{ word_set.description }}</p>
+    <a href="{{ url_for('matchinggame.play', type='set', word_set_id=word_set.id) }}">Play this set</a><br/>
+    <a href="{{ url_for('show_word_set_list') }}">back</a>
+  </div>
+  <form action="" method="post">
+    <label>Name</label> <input type="text" value="{{ word_set.name }}">
+    <label>Description</label> <input type="text" value="{{ word_set.description }}">
+    <ul>
+    {% for word in word_set.compound_words %}
+      <li><input type="text" value="{{ word.text_th }}"></input> <input type="text" value="{{ word.text_eng }}"></input></li>
+    {% endfor %}
+    </ul>
+  </form>
+{% endblock %}

@@ -9,7 +9,7 @@ import wordfusion.views
 from wordfusion.database import db_session
 from wordfusion.blueprints.matchinggame import matchinggame
 
-app.register_blueprint(matchinggame, url_prefix='/<type>/<int:set_id>')
+app.register_blueprint(matchinggame, url_prefix='/<type>/<int:word_set_id>')
 
 @app.teardown_appcontext
 def shutdown_database_session(exception=None):

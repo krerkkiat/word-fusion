@@ -6,7 +6,7 @@ from wordfusion.database import db_session
 from wordfusion.models import *
 
 def seed_db():
-    from wordfusion.models import User, Set, CompoundWord
+    from wordfusion.models import User, WordSet, CompoundWord
     from wordfusion.database import db_session
 
     user = User(username='foobar', first_name='Foo', last_name='bar')
@@ -18,7 +18,7 @@ def seed_db():
 
         if 'sets' in data.keys():
             for s in data['sets']:
-                set = Set(name=s['name'], description=s['description'])
+                word_set = WordSet(name=s['name'], description=s['description'])
                 for cw in s['compound_words']:
                     compound_word = CompoundWord(text_th=cw['text_th'],\
                                                  text_eng=cw['text_eng'],\
@@ -26,9 +26,9 @@ def seed_db():
                                                  part_of_speech=cw['part_of_speech'],\
                                                  combination=cw['combination'])
 
-                    set.compound_words.append(compound_word)
+                    word_set.compound_words.append(compound_word)
 
-                db_session.add(set)
+                db_session.add(word_set)
 
             db_session.commit()
         if 'sessions' in data.keys():
